@@ -37,7 +37,7 @@ public class MovieInitData implements CommandLineRunner {
             movie2.setGenre("Action");
             movie2.setAgeLimit(12);
             movie2.setDuration(152);
-            movie2.setImageUrl("https://musicart.xboxlive.com/7/abb02f00-0000-0000-0000-000000000002/504/image.jpg");
+            movie2.setImageUrl("https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg");
 
             Movie movie3 = new Movie();
             movie3.setMovieName("Titanic");

@@ -2,7 +2,6 @@ package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,7 +16,6 @@ public class Ticket {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate order_date;
     private double ticket_price;
-    private int seatID;
     private int phoneNumber;
 
 
@@ -68,14 +66,6 @@ public class Ticket {
 
     public void setTicket_price(double ticket_price) {
         this.ticket_price = ticket_price;
-    }
-
-    public int getSeatID() {
-        return seatID;
-    }
-
-    public void setSeatID(int seatID) {
-        this.seatID = seatID;
     }
 
     public int getPhoneNumber() {

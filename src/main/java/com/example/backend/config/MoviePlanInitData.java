@@ -3,7 +3,6 @@ package com.example.backend.config;
 import com.example.backend.model.*;
 import com.example.backend.repositories.*;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class MoviePlantInitData implements CommandLineRunner {
+public class MoviePlanInitData implements CommandLineRunner {
 
 
     private final IMoviePlanRepository iMoviePlanRepository;
@@ -19,7 +18,7 @@ public class MoviePlantInitData implements CommandLineRunner {
     private final ITheaterRepository iTheaterRepository;
     private final ICinemaRepository iCinemaRepository;
 
-    public MoviePlantInitData(IMoviePlanRepository iMoviePlanRepository, IMovieRepository iMovieRepository, ITheaterRepository iTheaterRepository, ICinemaRepository iCinemaRepository) {
+    public MoviePlanInitData(IMoviePlanRepository iMoviePlanRepository, IMovieRepository iMovieRepository, ITheaterRepository iTheaterRepository, ICinemaRepository iCinemaRepository) {
         this.iMoviePlanRepository = iMoviePlanRepository;
         this.iMovieRepository = iMovieRepository;
         this.iTheaterRepository = iTheaterRepository;
@@ -40,12 +39,7 @@ public class MoviePlantInitData implements CommandLineRunner {
             });
 
             // Find eller opret en film
-            Movie movie = iMovieRepository.findById(1L).orElseGet(() -> {
-                Movie newMovie = new Movie();
-                newMovie.setMovieName("Inception");
-                newMovie.setDuration(148);
-                return iMovieRepository.save(newMovie);
-            });
+            Movie movie = iMovieRepository.findById(1L).orElseThrow(() -> new RuntimeException("Movie not found"));
 
             // Find eller opret en biografsal (Theater)
             Theater theater = iTheaterRepository.findById(1L).orElseGet(() -> {
@@ -58,19 +52,19 @@ public class MoviePlantInitData implements CommandLineRunner {
 
             // Opret filmvisninger
             MoviePlan moviePlan1 = new MoviePlan();
-            moviePlan1.setDate(LocalDate.now());
+            moviePlan1.setMoviePlanDate(LocalDate.now());
             moviePlan1.setShowNumber(ShowNumber.MORNING);
             moviePlan1.setMovie(movie);
             moviePlan1.setTheater(theater);
 
             MoviePlan moviePlan2 = new MoviePlan();
-            moviePlan2.setDate(LocalDate.now().plusDays(1));
+            moviePlan2.setMoviePlanDate(LocalDate.now().plusDays(1));
             moviePlan2.setShowNumber(ShowNumber.AFTERNOON);
             moviePlan2.setMovie(movie);
             moviePlan2.setTheater(theater);
 
             MoviePlan moviePlan3 = new MoviePlan();
-            moviePlan3.setDate(LocalDate.now().plusDays(2));
+            moviePlan3.setMoviePlanDate(LocalDate.now().plusDays(2));
             moviePlan3.setShowNumber(ShowNumber.NOON);
             moviePlan3.setMovie(movie);
             moviePlan3.setTheater(theater);

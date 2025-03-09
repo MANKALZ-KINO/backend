@@ -1,17 +1,22 @@
 package com.example.backend.controllers;
 import com.example.backend.dtos.CreateMoviePlanDto;
+
+import com.example.backend.model.FreeSeats;
 import com.example.backend.model.MoviePlan;
-import com.example.backend.repositories.IMoviePlanRepository;
+
+import com.example.backend.repositories.FreeSeatsRepository;
 import com.example.backend.service.MoviePlanService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*")
 @RestController
 @CrossOrigin("*")
 public class MoviePlanRestController {
@@ -19,16 +24,33 @@ public class MoviePlanRestController {
 
     private final MoviePlanService moviePlanService;
 
-    public MoviePlanRestController(MoviePlanService moviePlanService) {
+    private FreeSeatsRepository freeSeatsRepository;
+
+    public MoviePlanRestController(MoviePlanService moviePlanService, FreeSeatsRepository freeSeatsRepository) {
         this.moviePlanService = moviePlanService;
+        this.freeSeatsRepository = freeSeatsRepository;
     }
+
+    @GetMapping("/allseats")
+    public List<FreeSeats> getFreeSeats() {
+        List<FreeSeats> seats = freeSeatsRepository.findAll();
+        return seats;
+    }
+
+    @GetMapping("/dates")
+    public List<LocalDate> getFreeDates() {
+        List<LocalDate> alldates = moviePlanService.getAllMoviePlanLocalDates();
+        return alldates;
+    }
+
+
 
     //GET
     @GetMapping("/movieplans/{id}")
     public List<MoviePlan> moviePlansWithMovieId(@PathVariable Long id) {
         List<MoviePlan> moviePlanForMovie = new ArrayList<>();
         for (MoviePlan m : moviePlanService.moviePlansWithMovieId(id))
-            if (m.getMovie().getMovieId() == id){
+            if (m.getMovie().getMovieId() == id) {
                 moviePlanForMovie.add(m);
             }
         return moviePlanForMovie;
@@ -45,7 +67,7 @@ public class MoviePlanRestController {
 
     //DELETE
     @DeleteMapping("/movieplan/{id}")
-    public ResponseEntity<String> deleteMoviePlan(@PathVariable Long id){
+    public ResponseEntity<String> deleteMoviePlan(@PathVariable Long id) {
         Optional<MoviePlan> orgMoviePlan = moviePlanService.movieplans(id);
         if (orgMoviePlan.isPresent()) {
             moviePlanService.deleteMovieById(id);

@@ -49,5 +49,4 @@ public class TicketService {
         ticketRepository.deleteById(Math.toIntExact(id));
     }
 
-
 }

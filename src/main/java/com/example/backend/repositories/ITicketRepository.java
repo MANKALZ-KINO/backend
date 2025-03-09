@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface ITicketRepository extends JpaRepository<Ticket, Integer> {
 
-    List<Ticket> findBySeatID(int seatID);
-
+    List<Ticket> findBySeat_SeatId(Long seatId);
 }
