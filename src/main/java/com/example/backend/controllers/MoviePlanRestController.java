@@ -1,4 +1,5 @@
 package com.example.backend.controllers;
+import com.example.backend.dtos.CreateMoviePlanDto;
 
 import com.example.backend.model.FreeSeats;
 import com.example.backend.model.MoviePlan;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin("*")
 public class MoviePlanRestController {
 
 
@@ -54,6 +56,15 @@ public class MoviePlanRestController {
         return moviePlanForMovie;
     }
 
+    @RequestMapping(
+        value = "/movieplans",
+        method = RequestMethod.POST,
+        consumes = "text/plain"
+    )
+    public void moviePlansWithMovieId(@RequestBody String body) {
+        System.out.println(body);
+    }
+
     //DELETE
     @DeleteMapping("/movieplan/{id}")
     public ResponseEntity<String> deleteMoviePlan(@PathVariable Long id) {
@@ -68,3 +79,4 @@ public class MoviePlanRestController {
 
 
 }
+

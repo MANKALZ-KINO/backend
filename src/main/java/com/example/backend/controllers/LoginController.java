@@ -28,7 +28,6 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    //GET
     @GetMapping("/employees")
     public List<Employee> movies() {
         return iEmployeeRepository.findAll();
