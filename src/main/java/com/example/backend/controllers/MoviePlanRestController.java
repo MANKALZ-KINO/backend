@@ -1,7 +1,5 @@
 package com.example.backend.controllers;
-import com.example.backend.dtos.CreateMoviePlanDto;
 
-import com.example.backend.model.FreeSeats;
 import com.example.backend.model.MoviePlan;
 
 import com.example.backend.repositories.FreeSeatsRepository;
@@ -10,7 +8,6 @@ import com.example.backend.service.MoviePlanService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.time.LocalDate;
 import java.util.ArrayList;

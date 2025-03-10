@@ -36,7 +36,7 @@ public class TicketController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createTicket(@RequestBody Ticket ticket) {
 
-        ticketService.createTicket(ticket); //opda
+        ticketService.createTicket(ticket); 
     }
 
     //getticketbyid

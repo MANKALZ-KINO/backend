@@ -41,12 +41,12 @@ public class SeatInitData implements CommandLineRunner {
             int numRows;
             int numSeatsPerRow;
 
-            if (managedTheater.getCapacity() <= 200) {
-                numRows = 20;
-                numSeatsPerRow = 12;
+            if (managedTheater.getCapacity() <= 10) {
+                numRows = 2;
+                numSeatsPerRow = 5;
             } else {
-                numRows = 25;
-                numSeatsPerRow = 16;
+                numRows = 2;
+                numSeatsPerRow = 6;
             }
 
             for (int row = 1; row <= numRows; row++) {

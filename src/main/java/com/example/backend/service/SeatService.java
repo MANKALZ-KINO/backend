@@ -1,7 +1,11 @@
 package com.example.backend.service;
 
+import com.example.backend.model.Seat;
+import com.example.backend.model.Theater;
 import com.example.backend.repositories.ISeatRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SeatService {
@@ -12,7 +16,7 @@ public class SeatService {
         this.iSeatRepository = iSeatRepository;
     }
 
-    public void findAvaliableSeat() {
-
+    public List<Seat> getAllSeats() {
+        return iSeatRepository.findAll();
     }
 }
