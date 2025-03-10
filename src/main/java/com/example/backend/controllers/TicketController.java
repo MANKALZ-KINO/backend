@@ -35,6 +35,7 @@ public class TicketController {
     @PostMapping("/createTicket")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTicket(@RequestBody Ticket ticket) {
+
         ticketService.createTicket(ticket); //opda
     }
 
