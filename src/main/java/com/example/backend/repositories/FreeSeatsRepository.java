@@ -10,4 +10,5 @@ import java.util.List;
 public interface FreeSeatsRepository extends JpaRepository<FreeSeats, Long> {
     List<FreeSeats> findBySeatId(Long seatId);
 
+    List<FreeSeats> findBymoviePlanId(Long movieplanId);
 }

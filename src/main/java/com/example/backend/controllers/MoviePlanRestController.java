@@ -16,25 +16,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@CrossOrigin(origins = "*")
+
 @RestController
 public class MoviePlanRestController {
 
 
     private final MoviePlanService moviePlanService;
 
-    private FreeSeatsRepository freeSeatsRepository;
 
     public MoviePlanRestController(MoviePlanService moviePlanService, FreeSeatsRepository freeSeatsRepository) {
         this.moviePlanService = moviePlanService;
-        this.freeSeatsRepository = freeSeatsRepository;
     }
 
-    @GetMapping("/allseats")
-    public List<FreeSeats> getFreeSeats() {
-        List<FreeSeats> seats = freeSeatsRepository.findAll();
-        return seats;
-    }
+
 
     @GetMapping("/dates")
     public List<LocalDate> getFreeDates() {
