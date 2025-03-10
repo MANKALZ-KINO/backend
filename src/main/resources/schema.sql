@@ -1,7 +1,7 @@
 DROP VIEW IF EXISTS freeseats3;
 
 CREATE VIEW freeseats3 AS
-SELECT a.*
+SELECT a.*, b.seat_id IS NULL AS seat_taken
 FROM (
          SELECT
              s.seat_id, s.row_num, s.seat_numb,
@@ -23,5 +23,5 @@ FROM (
                    ON a.seat_id = b.seat_id
                        AND a.movie_plan_id = b.movie_plan_id
                        AND a.theater_id = b.theater_id
-WHERE b.seat_id IS NULL
+
 ORDER BY movie_plan_date, show_number, row_num, seat_numb;

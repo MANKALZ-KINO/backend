@@ -23,7 +23,15 @@ public class FreeSeats {
     private ShowNumber showNumber;
     private LocalDate moviePlanDate;
     private Long moviePlanId;
+    private boolean seatTaken;
 
+    public boolean isSeatTaken() {
+        return seatTaken;
+    }
+
+    public void setSeatTaken(boolean seatTaken) {
+        this.seatTaken = seatTaken;
+    }
 
     public Long getSeatId() {
         return seatId;
