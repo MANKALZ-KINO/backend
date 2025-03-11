@@ -24,7 +24,6 @@ public class MoviePlan {
 
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "theater_id", referencedColumnName = "theaterId", nullable = true)
     private Theater theater;
 
