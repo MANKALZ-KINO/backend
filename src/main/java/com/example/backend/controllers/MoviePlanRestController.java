@@ -27,13 +27,11 @@ public class MoviePlanRestController {
     }
 
 
-
     @GetMapping("/dates")
     public List<LocalDate> getFreeDates() {
         List<LocalDate> alldates = moviePlanService.getAllMoviePlanLocalDates();
         return alldates;
     }
-
 
 
     //GET
@@ -48,9 +46,9 @@ public class MoviePlanRestController {
     }
 
     @RequestMapping(
-        value = "/movieplans",
-        method = RequestMethod.POST,
-        consumes = "text/plain"
+            value = "/movieplans",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
     )
     public void moviePlansWithMovieId(@RequestBody String body) {
         System.out.println(body);
