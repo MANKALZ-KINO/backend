@@ -14,16 +14,11 @@ public class LoginService {
     }
 
     private final IEmployeeRepository employeeRepository;
-    private final String PASSWORD = "admin123";
 
 
     public boolean authenticate(String name, String password) {
         Employee employee = employeeRepository.findByName(name);
 
-        if (employee != null && password.equals(PASSWORD)) {
-            return true;
-        }
-
-        return false;
+        return employee != null && employee.getPassword().equals(password);
     }
 }

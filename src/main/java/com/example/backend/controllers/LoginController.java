@@ -1,5 +1,6 @@
 package com.example.backend.controllers;
 
+import com.example.backend.dtos.LoginRequestDto;
 import com.example.backend.service.LoginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
-@RequestMapping("/login")
-
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class LoginController {
 
     private final LoginService loginService;
+
     @Autowired
     IEmployeeRepository iEmployeeRepository;
 
@@ -36,9 +35,9 @@ public class LoginController {
         return iEmployeeRepository.findByNameIgnoreCase(name);
     }
 
-    @PostMapping("/loggedin")
-    public ResponseEntity<String> login(@RequestParam String name, @RequestParam String password) {
-        boolean isAuthenticated = loginService.authenticate(name, password);
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto) {
+        boolean isAuthenticated = loginService.authenticate(loginRequestDto.username, loginRequestDto.password);
 
         if (isAuthenticated) {
             return ResponseEntity.ok("Login successful");
