@@ -1,8 +1,11 @@
 package com.example.backend.controllers;
 
 
+import com.example.backend.model.MoviePlan;
+import com.example.backend.model.Seat;
 import com.example.backend.model.Ticket;
 import com.example.backend.repositories.IMoviePlanRepository;
+import com.example.backend.repositories.ISeatRepository;
 import com.example.backend.repositories.ITicketRepository;
 import com.example.backend.service.TicketService;
 
@@ -20,10 +23,12 @@ public class TicketController {
 
     private final TicketService ticketService;
     private final IMoviePlanRepository moviePlanRepository;
+    private final ISeatRepository seatRepository;
 
-    public TicketController(TicketService ticketService, IMoviePlanRepository moviePlanRepository) {
+    public TicketController(TicketService ticketService, IMoviePlanRepository moviePlanRepository, ISeatRepository seatRepository) {
         this.ticketService = ticketService;
         this.moviePlanRepository = moviePlanRepository;
+        this.seatRepository = seatRepository;
     }
 
     // GET: Hent alle
@@ -32,12 +37,33 @@ public class TicketController {
         return ticketService.findAllTickets();
     }
 
+//    @PostMapping("/createTicket")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void createTicket(@RequestBody Ticket ticket) {
+//
+//        ticketService.createTicket(ticket);
+//    }
     @PostMapping("/createTicket")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createTicket(@RequestBody Ticket ticket) {
+    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+        try {
+            // Sørg for, at Seat og MoviePlan eksisterer i databasen
+            Seat seat = seatRepository.findById(ticket.getSeat().getSeatId())
+                    .orElseThrow(() -> new RuntimeException("Seat not found"));
 
-        ticketService.createTicket(ticket); 
+            MoviePlan moviePlan = moviePlanRepository.findById(ticket.getMoviePlan().getMoviePlanId())
+                    .orElseThrow(() -> new RuntimeException("MoviePlan not found"));
+
+            // Sæt referencer korrekt
+            ticket.setSeat(seat);
+            ticket.setMoviePlan(moviePlan);
+
+            Ticket savedTicket = ticketService.createTicket(ticket);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
+
 
     //getticketbyid
     @GetMapping("/{ticketId}")

@@ -27,8 +27,8 @@ public class TicketService {
     public List<Ticket> findAllTickets() {
         return ticketRepository.findAll();
     }
-    public void createTicket(Ticket ticket) {
-         ticketRepository.save(ticket);
+    public Ticket createTicket(Ticket ticket) {
+        return ticketRepository.save(ticket);
     }
     public Optional<Ticket> findTicketById(Long id) {
          return ticketRepository.findById(Math.toIntExact(id));
