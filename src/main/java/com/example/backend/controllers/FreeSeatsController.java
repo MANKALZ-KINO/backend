@@ -28,9 +28,9 @@ public class FreeSeatsController {
         return seats;
     }
 
-    @GetMapping("/allFreeSeats/{id}")
-    public List<FreeSeats> getFreeSeatsById(@PathVariable Long id) {
-        List<FreeSeats> seats = freeSeatsRepository.findBymoviePlanId(id);
+    @GetMapping("/allFreeSeats/{moviePlanId}")
+    public List<FreeSeats> getFreeSeatsById(@PathVariable Long moviePlanId) {
+        List<FreeSeats> seats = freeSeatsRepository.findBymoviePlanId(moviePlanId);
         return seats;
     }
     @GetMapping("/allSeats")

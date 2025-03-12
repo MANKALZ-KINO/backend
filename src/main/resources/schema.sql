@@ -1,7 +1,7 @@
 DROP VIEW IF EXISTS freeseats3;
 
 CREATE VIEW freeseats3 AS
-SELECT a.*, b.seat_id IS NULL AS seat_taken
+SELECT a.*, b.seat_id IS NOT NULL AS seat_taken
 FROM (
          SELECT
              s.seat_id, s.row_num, s.seat_numb,
