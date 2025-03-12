@@ -43,26 +43,37 @@ public class TicketController {
 //
 //        ticketService.createTicket(ticket);
 //    }
-    @PostMapping("/createTicket")
-    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
-        try {
-            // Sørg for, at Seat og MoviePlan eksisterer i databasen
-            Seat seat = seatRepository.findById(ticket.getSeat().getSeatId())
-                    .orElseThrow(() -> new RuntimeException("Seat not found"));
+@PostMapping("/createTicket")
+public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+    try {
+        // Log incoming data
+        System.out.println("Modtager Ticket Data: " + ticket);
 
-            MoviePlan moviePlan = moviePlanRepository.findById(ticket.getMoviePlan().getMoviePlanId())
-                    .orElseThrow(() -> new RuntimeException("MoviePlan not found"));
+        // Sørg for, at Seat og MoviePlan eksisterer i databasen
+        Seat seat = seatRepository.findById(ticket.getSeat().getSeatId())
+                .orElseThrow(() -> new RuntimeException("Seat not found"));
 
-            // Sæt referencer korrekt
-            ticket.setSeat(seat);
-            ticket.setMoviePlan(moviePlan);
+        MoviePlan moviePlan = moviePlanRepository.findById(ticket.getMoviePlan().getMoviePlanId())
+                .orElseThrow(() -> new RuntimeException("MoviePlan not found"));
 
-            Ticket savedTicket = ticketService.createTicket(ticket);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        // Sæt referencer korrekt
+        ticket.setSeat(seat);
+        ticket.setMoviePlan(moviePlan);
+
+        Ticket savedTicket = ticketService.createTicket(ticket);
+
+        // Log response data
+        System.out.println("Returnerer Ticket JSON: " + savedTicket);
+        System.out.println("Seat Info: " + savedTicket.getSeat());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
+}
+
+
 
 
     //getticketbyid
