@@ -34,12 +34,14 @@ public class MoviePlanInitData implements CommandLineRunner {
             // Find eller opret en biograf (Cinema)
             Cinema cinema = iCinemaRepository.findById(1L).orElseGet(() -> {
                 Cinema newCinema = new Cinema();
-                newCinema.setName("City Cinema");  // ✅ Opretter en cinema
+                newCinema.setName("City Cinema");  // Opretter en cinema
                 return iCinemaRepository.save(newCinema);
             });
 
             // Find eller opret en film
             Movie movie = iMovieRepository.findById(1L).orElseThrow(() -> new RuntimeException("Movie not found"));
+            Movie movie2 = iMovieRepository.findById(2L).orElseThrow(() -> new RuntimeException("Movie not found"));
+            Movie movie3 = iMovieRepository.findById(3L).orElseThrow(() -> new RuntimeException("Movie not found"));
 
             // Find eller opret en biografsal (Theater)
             Theater theater = iTheaterRepository.findById(1L).orElseGet(() -> {
@@ -69,8 +71,20 @@ public class MoviePlanInitData implements CommandLineRunner {
             moviePlan3.setMovie(movie);
             moviePlan3.setTheater(theater);
 
+            MoviePlan moviePlan4 = new MoviePlan();
+            moviePlan4.setMoviePlanDate(LocalDate.now().plusDays(2));
+            moviePlan4.setShowNumber(ShowNumber.NOON);
+            moviePlan4.setMovie(movie2);
+            moviePlan4.setTheater(theater);
+
+            MoviePlan moviePlan5 = new MoviePlan();
+            moviePlan5.setMoviePlanDate(LocalDate.now().plusDays(2));
+            moviePlan5.setShowNumber(ShowNumber.NOON);
+            moviePlan5.setMovie(movie3);
+            moviePlan5.setTheater(theater);
+
             // Gem i databasen
-            iMoviePlanRepository.saveAll(List.of(moviePlan1, moviePlan2, moviePlan3));
+            iMoviePlanRepository.saveAll(List.of(moviePlan1, moviePlan2, moviePlan3, moviePlan4, moviePlan5));
 
             System.out.println("Init data: Movie plans added!");
         }
