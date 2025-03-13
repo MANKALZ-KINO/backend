@@ -30,6 +30,10 @@ public class MoviePlanService {
         return iMoviePlanRepository.findById(id);
     }
 
+    public List<MoviePlan> movieplansByDate(LocalDate movieplandate) {
+        return iMoviePlanRepository.findByMoviePlanDate(movieplandate);
+    }
+
     public void deleteMovieById(Long id) {
         iMoviePlanRepository.deleteById(id);
     }
