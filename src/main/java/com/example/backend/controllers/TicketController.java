@@ -6,7 +6,6 @@ import com.example.backend.model.Seat;
 import com.example.backend.model.Ticket;
 import com.example.backend.repositories.IMoviePlanRepository;
 import com.example.backend.repositories.ISeatRepository;
-import com.example.backend.repositories.ITicketRepository;
 import com.example.backend.service.TicketService;
 
 import org.springframework.http.HttpStatus;
@@ -99,19 +98,5 @@ public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
         ticketService.deleById(id);
         return ResponseEntity.ok("Ticket deleted successfully");
     }
-
-//    @PostMapping("/purchase")
-//    public ResponseEntity<Ticket> purchaseTicket(
-//            @RequestParam Long moviePlanId,
-//            @RequestParam int seatID,
-//            @RequestParam double ticketPrice,
-//            @RequestParam int phoneNumber) {
-//        try {
-//            Ticket ticket = ticketService.purchaseTicket(moviePlanId, seatID, ticketPrice, phoneNumber);
-//            return ResponseEntity.ok(ticket);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
 
 }
