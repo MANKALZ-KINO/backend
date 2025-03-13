@@ -25,9 +25,17 @@ public class MoviePlanService {
         return iMoviePlanRepository.findAllMoviePlanDates();
     }
 
+    public List<MoviePlan> findAllMoviePlans() {
+        return iMoviePlanRepository.findAll();
+    }
+
 
     public Optional<MoviePlan> movieplans(Long id) {
         return iMoviePlanRepository.findById(id);
+    }
+
+    public void saveMoviePlan(MoviePlan moviePlan) {
+        iMoviePlanRepository.save(moviePlan);
     }
 
     public void deleteMovieById(Long id) {

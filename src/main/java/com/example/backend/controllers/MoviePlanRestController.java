@@ -1,10 +1,14 @@
 package com.example.backend.controllers;
 
+import com.example.backend.model.Movie;
 import com.example.backend.model.MoviePlan;
 
+import com.example.backend.model.Theater;
 import com.example.backend.repositories.FreeSeatsRepository;
 import com.example.backend.service.MoviePlanService;
 
+import com.example.backend.service.MovieService;
+import com.example.backend.service.TheaterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +24,14 @@ public class MoviePlanRestController {
 
 
     private final MoviePlanService moviePlanService;
+    private final MovieService movieService;
+    private final TheaterService theaterService;
 
 
-    public MoviePlanRestController(MoviePlanService moviePlanService, FreeSeatsRepository freeSeatsRepository) {
+    public MoviePlanRestController(MoviePlanService moviePlanService, MovieService movieService, TheaterService theaterService) {
         this.moviePlanService = moviePlanService;
+        this.movieService = movieService;
+        this.theaterService = theaterService;
     }
 
 
@@ -45,6 +53,11 @@ public class MoviePlanRestController {
         return moviePlanForMovie;
     }
 
+    @GetMapping("/movieplans")
+    public List<MoviePlan> moviePlans() {
+        return moviePlanService.findAllMoviePlans();
+    }
+
     @RequestMapping(
             value = "/movieplans",
             method = RequestMethod.POST,
@@ -53,6 +66,31 @@ public class MoviePlanRestController {
     public void moviePlansWithMovieId(@RequestBody String body) {
         System.out.println(body);
     }
+
+
+    @PostMapping("/createMoviePlan")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> postMoviePlan(@RequestBody MoviePlan moviePlan) {
+        try {
+            System.out.println("Inserting new movie plan!");
+            System.out.println(moviePlan);
+
+            Movie movie = movieService.findMovieById(moviePlan.getMovie().getMovieId())
+                    .orElseThrow(() -> new RuntimeException("Movie not found"));
+            Theater theater = theaterService.findTheaterByIdNotList(moviePlan.getTheater().getTheaterId())
+                    .orElseThrow(() -> new RuntimeException("Theater not found"));
+
+            moviePlan.setMovie(movie);
+            moviePlan.setTheater(theater);
+
+            moviePlanService.saveMoviePlan(moviePlan);
+            return ResponseEntity.ok("Movie plan created successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+
 
     //DELETE
     @DeleteMapping("/movieplan/{id}")
