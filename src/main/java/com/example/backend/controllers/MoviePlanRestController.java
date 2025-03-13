@@ -44,6 +44,12 @@ public class MoviePlanRestController {
             }
         return moviePlanForMovie;
     }
+    @GetMapping("/movieplans")
+    public List<MoviePlan> moviePlansByDate(@RequestParam("date") String movieplandate) {
+        LocalDate date = LocalDate.parse(movieplandate);
+        return moviePlanService.movieplansByDate(date);
+    }
+
 
 //    @GetMapping("/byDate/{movieplandate}")
 //    public List<MoviePlan> moviePlansByDate(@PathVariable LocalDate movieplandate) {
