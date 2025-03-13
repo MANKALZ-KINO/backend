@@ -1,5 +1,7 @@
 package com.example.backend.controllers;
 
+import com.example.backend.model.MoviePlan;
+import com.example.backend.model.Seat;
 import com.example.backend.model.Ticket;
 import com.example.backend.repositories.IMoviePlanRepository;
 import com.example.backend.repositories.ISeatRepository;
@@ -33,10 +35,19 @@ public class TicketController {
     }
 
     @PostMapping("/createTicket")
-    public ResponseEntity<Ticket> createSingleTicket(@RequestBody Ticket ticket) {
-        Ticket savedTicket = ticketService.createTicket(ticket);
+    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+        Seat seat = seatRepository.findById(ticket.getSeat().getSeatId())
+                .orElseThrow(() -> new RuntimeException("Seat not found!"));
+        ticket.setSeat(seat);
+
+        MoviePlan moviePlan = moviePlanRepository.findById(ticket.getMoviePlan().getMoviePlanId())
+                .orElseThrow(() -> new RuntimeException("MoviePlan not found!"));
+        ticket.setMoviePlan(moviePlan); // Sikrer at moviePlan indeholder en movie
+
+        Ticket savedTicket = ticketService.saveTicket(ticket);
         return ResponseEntity.ok(savedTicket);
     }
+
 
     //getticketbyid
     @GetMapping("/{ticketId}")
