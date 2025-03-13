@@ -24,6 +24,7 @@ public class TicketService {
         int ageLimit = ticket.getMoviePlan().getMovie().getAgeLimit();
         return ageLimit;
     }
+
     public List<Ticket> findAllTickets() {
         return ticketRepository.findAll();
     }

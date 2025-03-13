@@ -1,7 +1,6 @@
 package com.example.backend.service;
 
 import com.example.backend.model.Seat;
-import com.example.backend.model.Theater;
 import com.example.backend.repositories.ISeatRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,15 +1,10 @@
 package com.example.backend.controllers;
 
-
-import com.example.backend.model.MoviePlan;
-import com.example.backend.model.Seat;
 import com.example.backend.model.Ticket;
 import com.example.backend.repositories.IMoviePlanRepository;
 import com.example.backend.repositories.ISeatRepository;
-import com.example.backend.repositories.ITicketRepository;
 import com.example.backend.service.TicketService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,44 +32,11 @@ public class TicketController {
         return ticketService.findAllTickets();
     }
 
-//    @PostMapping("/createTicket")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void createTicket(@RequestBody Ticket ticket) {
-//
-//        ticketService.createTicket(ticket);
-//    }
-@PostMapping("/createTicket")
-public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
-    try {
-        // Log incoming data
-        System.out.println("Modtager Ticket Data: " + ticket);
-
-        // Sørg for, at Seat og MoviePlan eksisterer i databasen
-        Seat seat = seatRepository.findById(ticket.getSeat().getSeatId())
-                .orElseThrow(() -> new RuntimeException("Seat not found"));
-
-        MoviePlan moviePlan = moviePlanRepository.findById(ticket.getMoviePlan().getMoviePlanId())
-                .orElseThrow(() -> new RuntimeException("MoviePlan not found"));
-
-        // Sæt referencer korrekt
-        ticket.setSeat(seat);
-        ticket.setMoviePlan(moviePlan);
-
+    @PostMapping("/createTicket")
+    public ResponseEntity<Ticket> createSingleTicket(@RequestBody Ticket ticket) {
         Ticket savedTicket = ticketService.createTicket(ticket);
-
-        // Log response data
-        System.out.println("Returnerer Ticket JSON: " + savedTicket);
-        System.out.println("Seat Info: " + savedTicket.getSeat());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.ok(savedTicket);
     }
-}
-
-
-
 
     //getticketbyid
     @GetMapping("/{ticketId}")
@@ -104,19 +66,5 @@ public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
         ticketService.deleById(id);
         return ResponseEntity.ok("Ticket deleted successfully");
     }
-
-//    @PostMapping("/purchase")
-//    public ResponseEntity<Ticket> purchaseTicket(
-//            @RequestParam Long moviePlanId,
-//            @RequestParam int seatID,
-//            @RequestParam double ticketPrice,
-//            @RequestParam int phoneNumber) {
-//        try {
-//            Ticket ticket = ticketService.purchaseTicket(moviePlanId, seatID, ticketPrice, phoneNumber);
-//            return ResponseEntity.ok(ticket);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
 
 }

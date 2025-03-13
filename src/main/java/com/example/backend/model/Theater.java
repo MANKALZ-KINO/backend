@@ -22,6 +22,17 @@ public class Theater {
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
     private List<Seat> seats;
 
+    public Theater(long theaterId, int capacity, String theaterName, Cinema cinema, List<Seat> seats) {
+        this.theaterId = theaterId;
+        this.capacity = capacity;
+        this.theaterName = theaterName;
+        this.cinema = cinema;
+        this.seats = seats;
+    }
+
+    public Theater() {
+
+    }
 
     public long getTheaterId() {
         return theaterId;
