@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 
@@ -13,11 +12,10 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticketID;
+    private Long ticketID;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate order_date;
     private double ticket_price;
-    private int seatID;
     private int phoneNumber;
 
 
@@ -28,7 +26,6 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "movieplan_id", nullable = false)
-    @JsonBackReference
     private MoviePlan moviePlan;
 
     public MoviePlan getMoviePlan() {
@@ -39,11 +36,11 @@ public class Ticket {
         this.moviePlan = moviePlan;
     }
 
-    public int getTicketID() {
+    public Long getTicketID() {
         return ticketID;
     }
 
-    public void setTicketID(int ticketID) {
+    public void setTicketID(Long ticketID) {
         this.ticketID = ticketID;
     }
 
@@ -69,14 +66,6 @@ public class Ticket {
 
     public void setTicket_price(double ticket_price) {
         this.ticket_price = ticket_price;
-    }
-
-    public int getSeatID() {
-        return seatID;
-    }
-
-    public void setSeatID(int seatID) {
-        this.seatID = seatID;
     }
 
     public int getPhoneNumber() {

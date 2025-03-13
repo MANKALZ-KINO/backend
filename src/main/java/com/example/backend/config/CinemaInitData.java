@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CinemaInitData implements CommandLineRunner {
 
-    @Autowired
-    ICinemaRepository iCinemaRepository;
+    private final ICinemaRepository iCinemaRepository;
+
+    public CinemaInitData(ICinemaRepository iCinemaRepository) {
+        this.iCinemaRepository = iCinemaRepository;
+    }
 
 
     @Override

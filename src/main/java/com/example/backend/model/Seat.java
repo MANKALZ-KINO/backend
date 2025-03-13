@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,8 +14,18 @@ public class Seat {
 
     @ManyToOne
     @JoinColumn(name = "theater_id", referencedColumnName = "theaterId", nullable = false)
+    @JsonBackReference
     private Theater theater;
 
+    public Seat(Long seatId, int seatNumb, int rowNum, Theater theater) {
+        this.seatId = seatId;
+        this.seatNumb = seatNumb;
+        this.rowNum = rowNum;
+        this.theater = theater;
+    }
+
+    public Seat() {
+    }
 
     public Long getSeatId() {
         return seatId;

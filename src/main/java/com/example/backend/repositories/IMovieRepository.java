@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface IMovieRepository extends JpaRepository<Movie, Long> {
+
     List<Movie> findAllBymovieName(String movieName);
 }

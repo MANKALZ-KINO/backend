@@ -2,33 +2,48 @@ package com.example.backend.service;
 
 import com.example.backend.model.MoviePlan;
 import com.example.backend.repositories.IMoviePlanRepository;
-import com.example.backend.repositories.IMovieRepository;
-import com.example.backend.repositories.ITicketRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MoviePlanService {
 
-    @Autowired
-    IMoviePlanRepository iMoviePlanRepository;
+    private IMoviePlanRepository iMoviePlanRepository;
 
-    @Autowired
-    ITicketRepository iTicketRepository;
 
-    @Transactional
-    public void deleteMoviePlan(Long moviePlanId) {
-        Optional<MoviePlan> moviePlanOpt = iMoviePlanRepository.findById(moviePlanId);
-
-        if (moviePlanOpt.isPresent()) {
-            MoviePlan moviePlan = moviePlanOpt.get();
-            iTicketRepository.deleteAll(moviePlan.getTickets()); // Slet først tickets
-            iMoviePlanRepository.delete(moviePlan); // Slet derefter MoviePlan
-        } else {
-            System.out.println("MoviePlan med ID " + moviePlanId + " blev ikke fundet. Springes over.");
-        }
+    public MoviePlanService(IMoviePlanRepository iMoviePlanRepository) {
+        this.iMoviePlanRepository = iMoviePlanRepository;
     }
+
+    public List<MoviePlan> moviePlansWithMovieId(Long id) {
+        return iMoviePlanRepository.findAll();
+    }
+    public List<LocalDate> getAllMoviePlanLocalDates() {
+        return iMoviePlanRepository.findAllMoviePlanDates();
+    }
+
+    public List<MoviePlan> findAllMoviePlans() {
+        return iMoviePlanRepository.findAll();
+    }
+
+
+    public Optional<MoviePlan> movieplans(Long id) {
+        return iMoviePlanRepository.findById(id);
+    }
+
+    public void saveMoviePlan(MoviePlan moviePlan) {
+        iMoviePlanRepository.save(moviePlan);
+    }
+
+    public List<MoviePlan> movieplansByDate(LocalDate movieplandate) {
+        return iMoviePlanRepository.findByMoviePlanDate(movieplandate);
+    }
+
+    public void deleteMovieById(Long id) {
+        iMoviePlanRepository.deleteById(id);
+    }
+
 }

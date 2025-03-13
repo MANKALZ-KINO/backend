@@ -17,14 +17,17 @@ import java.util.List;
 @Component
 public class SeatInitData implements CommandLineRunner {
 
-    @Autowired
-    ISeatRepository iSeatRepository;
-
-    @Autowired
-    ITheaterRepository iTheaterRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    private final ISeatRepository iSeatRepository;
+    private final ITheaterRepository iTheaterRepository;
+
+    public SeatInitData(ISeatRepository iSeatRepository, ITheaterRepository iTheaterRepository) {
+        this.iSeatRepository = iSeatRepository;
+        this.iTheaterRepository = iTheaterRepository;
+    }
 
     @Override
     @Transactional
@@ -38,12 +41,12 @@ public class SeatInitData implements CommandLineRunner {
             int numRows;
             int numSeatsPerRow;
 
-            if (managedTheater.getCapacity() <= 200) {
-                numRows = 20;
-                numSeatsPerRow = 12;
+            if (managedTheater.getCapacity() <= 10) {
+                numRows = 2;
+                numSeatsPerRow = 5;
             } else {
-                numRows = 25;
-                numSeatsPerRow = 16;
+                numRows = 2;
+                numSeatsPerRow = 6;
             }
 
             for (int row = 1; row <= numRows; row++) {

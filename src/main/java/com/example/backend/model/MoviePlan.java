@@ -12,9 +12,11 @@ public class MoviePlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long moviePlanId;
-    private LocalDate date;
+    private LocalDate moviePlanDate;
 
-    @Enumerated(EnumType.STRING)
+
+   @Enumerated(EnumType.STRING)
+    @Column(name = "show_number", nullable = false)
     private ShowNumber showNumber;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -23,7 +25,6 @@ public class MoviePlan {
 
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "theater_id", referencedColumnName = "theaterId", nullable = true)
     private Theater theater;
 
@@ -46,12 +47,12 @@ public class MoviePlan {
         this.moviePlanId = moviePlanId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getMoviePlanDate() {
+        return moviePlanDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setMoviePlanDate(LocalDate moviePlanDate) {
+        this.moviePlanDate = moviePlanDate;
     }
 
     public ShowNumber getShowNumber() {

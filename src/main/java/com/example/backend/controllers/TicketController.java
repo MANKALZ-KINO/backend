@@ -1,76 +1,70 @@
 package com.example.backend.controllers;
 
-import com.example.backend.model.Movie;
 import com.example.backend.model.Ticket;
 import com.example.backend.repositories.IMoviePlanRepository;
-import com.example.backend.repositories.ITicketRepository;
+import com.example.backend.repositories.ISeatRepository;
 import com.example.backend.service.TicketService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/ticket")
 public class TicketController {
 
     private final TicketService ticketService;
-    private final ITicketRepository ticketRepository;
     private final IMoviePlanRepository moviePlanRepository;
+    private final ISeatRepository seatRepository;
 
-    public TicketController(TicketService ticketService, ITicketRepository ticketRepository, IMoviePlanRepository moviePlanRepository) {
+    public TicketController(TicketService ticketService, IMoviePlanRepository moviePlanRepository, ISeatRepository seatRepository) {
         this.ticketService = ticketService;
-        this.ticketRepository = ticketRepository;
         this.moviePlanRepository = moviePlanRepository;
+        this.seatRepository = seatRepository;
     }
 
     // GET: Hent alle
     @GetMapping("/all")
     public List<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
+        return ticketService.findAllTickets();
     }
 
     @PostMapping("/createTicket")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Ticket createTicket(@RequestBody Ticket ticket) {
-        return ticketRepository.save(ticket); //opda
+    public ResponseEntity<Ticket> createSingleTicket(@RequestBody Ticket ticket) {
+        Ticket savedTicket = ticketService.createTicket(ticket);
+        return ResponseEntity.ok(savedTicket);
     }
 
+    //getticketbyid
+    @GetMapping("/{ticketId}")
+    public ResponseEntity<Ticket> findByTicketId(@PathVariable Long ticketId) {
+        Optional<Ticket> ticket = ticketService.findTicketById(ticketId);
+        return ticket.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+
     // UPDATE
-    @PutMapping("/{id}")
-    public ResponseEntity<Ticket> updateTicket(@PathVariable int id, @RequestBody Ticket updatedTicket) {
-        if (!ticketRepository.existsById(id)) {
+    @PutMapping("/update/{ticketId}")
+    public ResponseEntity<Ticket> updateTicket(@PathVariable Long ticketId, @RequestBody Ticket updatedTicket) {
+        if (!ticketService.existsById(ticketId)) {
             return ResponseEntity.notFound().build();
         }
-        updatedTicket.setTicketID(id); // Sikrer at ID'et bliver det samme
-        Ticket savedTicket = ticketRepository.save(updatedTicket);
+        updatedTicket.setTicketID(ticketId);
+        Ticket savedTicket = ticketService.saveTicket(updatedTicket);
         return ResponseEntity.ok(savedTicket);
     }
 
     //DELETE via id
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteTicket(@PathVariable int id) {
-        if (!ticketRepository.existsById(id)) {
+    @DeleteMapping("/delete/{ticketId}")
+    public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
+        if (!ticketService.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-        ticketRepository.deleteById(id);
+        ticketService.deleById(id);
         return ResponseEntity.ok("Ticket deleted successfully");
     }
-
-//    @PostMapping("/purchase")
-//    public ResponseEntity<Ticket> purchaseTicket(
-//            @RequestParam Long moviePlanId,
-//            @RequestParam int seatID,
-//            @RequestParam double ticketPrice,
-//            @RequestParam int phoneNumber) {
-//        try {
-//            Ticket ticket = ticketService.purchaseTicket(moviePlanId, seatID, ticketPrice, phoneNumber);
-//            return ResponseEntity.ok(ticket);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
 
 }

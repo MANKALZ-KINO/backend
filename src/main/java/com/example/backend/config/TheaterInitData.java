@@ -14,11 +14,13 @@ import java.util.List;
 @Component
 public class TheaterInitData implements CommandLineRunner {
 
-    @Autowired
-    private ITheaterRepository iTheaterRepository;
+    private final ITheaterRepository iTheaterRepository;
+    private final ICinemaRepository iCinemaRepository;
 
-    @Autowired
-    private ICinemaRepository iCinemaRepository;
+    public TheaterInitData(ITheaterRepository iTheaterRepository, ICinemaRepository iCinemaRepository) {
+        this.iTheaterRepository = iTheaterRepository;
+        this.iCinemaRepository = iCinemaRepository;
+    }
 
     @Override
     @Transactional // Sikrer at alt kører i en transaktion
@@ -29,18 +31,18 @@ public class TheaterInitData implements CommandLineRunner {
                 Cinema newCinema = new Cinema();
                 newCinema.setName("Nordisk Film Biografer");
                 newCinema.setAddress("Gammel Kongevej 20, Frederiksberg");
-                return iCinemaRepository.save(newCinema); // Gemmer og gør den managed
+                return iCinemaRepository.save(newCinema); // Gemmer
             });
 
 
             Theater smallTheater = new Theater();
             smallTheater.setTheaterName("Small Theater");
-            smallTheater.setCapacity(200);
+            smallTheater.setCapacity(3);
             smallTheater.setCinema(cinema);
 
             Theater largeTheater = new Theater();
             largeTheater.setTheaterName("Large Theater");
-            largeTheater.setCapacity(400);
+            largeTheater.setCapacity(4);
             largeTheater.setCinema(cinema);
 
             iTheaterRepository.saveAll(List.of(smallTheater, largeTheater));

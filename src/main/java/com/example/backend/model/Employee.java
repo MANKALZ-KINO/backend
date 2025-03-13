@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
@@ -17,6 +18,7 @@ public class Employee {
     private Cinema cinema;
 
     private String name;
+    private String password;
 
     public String getName() {
         return name;
@@ -24,6 +26,14 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getEmployeeId() {
