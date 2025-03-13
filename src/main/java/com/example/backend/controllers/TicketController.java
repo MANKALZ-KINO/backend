@@ -37,12 +37,7 @@ public class TicketController {
         return ticketService.findAllTickets();
     }
 
-//    @PostMapping("/createTicket")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void createTicket(@RequestBody Ticket ticket) {
-//
-//        ticketService.createTicket(ticket);
-//    }
+
 @PostMapping("/createTicket")
 public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
     try {
