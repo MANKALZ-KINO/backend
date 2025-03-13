@@ -20,6 +20,7 @@ public class MoviePlan {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "movie_id", referencedColumnName = "movieId", nullable = false)
+    //@JsonIgnore
     private Movie movie;
 
 

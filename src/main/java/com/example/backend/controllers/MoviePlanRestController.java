@@ -42,11 +42,15 @@ public class MoviePlanRestController {
             if (m.getMovie().getMovieId().equals(id)) {
                 moviePlanForMovie.add(m);
             }
+        System.out.println(moviePlanForMovie);
         return moviePlanForMovie;
     }
     @GetMapping("/movieplans")
     public List<MoviePlan> moviePlansByDate(@RequestParam("date") String movieplandate) {
         LocalDate date = LocalDate.parse(movieplandate);
+        List<MoviePlan> plans = moviePlanService.movieplansByDate(date);
+        System.out.println("Requested Date: " + date);
+        System.out.println("Found Movie Plans: " + plans);
         return moviePlanService.movieplansByDate(date);
     }
 
