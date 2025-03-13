@@ -4,6 +4,7 @@ import com.example.backend.model.FreeSeats;
 import com.example.backend.model.Seat;
 import com.example.backend.repositories.FreeSeatsRepository;
 import com.example.backend.service.SeatService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +15,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 public class FreeSeatsController {
+
     private FreeSeatsRepository freeSeatsRepository;
     private SeatService seatService;
 
+    @Autowired
     public FreeSeatsController(FreeSeatsRepository freeSeatsRepository, SeatService seatService) {
         this.freeSeatsRepository = freeSeatsRepository;
         this.seatService = seatService;

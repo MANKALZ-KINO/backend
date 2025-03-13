@@ -17,6 +17,15 @@ public class Seat {
     @JsonBackReference
     private Theater theater;
 
+    public Seat(Long seatId, int seatNumb, int rowNum, Theater theater) {
+        this.seatId = seatId;
+        this.seatNumb = seatNumb;
+        this.rowNum = rowNum;
+        this.theater = theater;
+    }
+
+    public Seat() {
+    }
 
     public Long getSeatId() {
         return seatId;
