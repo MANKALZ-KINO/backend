@@ -7,14 +7,16 @@ import com.example.backend.repositories.IMoviePlanRepository;
 import com.example.backend.repositories.ISeatRepository;
 import com.example.backend.service.TicketService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.xpath.XPathVariableResolver;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/ticket")
 public class TicketController {
 
@@ -67,8 +69,54 @@ public class TicketController {
 
     //DELETE via id
     @DeleteMapping("/delete/{ticketId}")
+
+    public ResponseEntity<String> deleteTicket(@PathVariable Long ticketId) {
+        if (!ticketService.existsById(ticketId)) {
+            return ResponseEntity.notFound().build();
+        }
+        ticketService.deleteById(ticketId);
+        return ResponseEntity.ok("Ticket deleted successfully");
+    }
+
+    @GetMapping("/customer-tickets")
+    public ResponseEntity<?> getTicketsByPhoneNumber(@RequestParam int phoneNumber) {
+        try {
+            List<Ticket> tickets = ticketService.getTicketsByPhoneNumber(phoneNumber);
+            if (tickets.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(tickets);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching tickets: " + e.getMessage());
+        }
+    }
+
+
+
+    // DELETE endpoint to cancel a ticket
+    @DeleteMapping("/tickets/{ticketId}")
+    public ResponseEntity<?> cancelTicket(@PathVariable Long ticketId) {
+        ticketService.cancelTicket(ticketId);
+        return ResponseEntity.ok().build();
+    }
+
+    // PUT endpoint to update a ticket (change reservation)
+    @PutMapping("/tickets/change")
+    public ResponseEntity<Ticket> changeTicket(
+            @RequestParam Long ticketId,
+            @RequestParam Long seatId,
+            @RequestParam Long moviePlanId) {
+        Ticket updatedTicket = ticketService.changeTicket(ticketId, seatId, moviePlanId);
+        return ResponseEntity.ok(updatedTicket);
+    }
+
     public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
         ticketService.deleById(id);
         return ResponseEntity.ok("Ticket deleted successfully");
     }
+
 }
+
+
+
