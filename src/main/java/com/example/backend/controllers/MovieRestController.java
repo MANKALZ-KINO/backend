@@ -61,4 +61,15 @@ public class MovieRestController {
             return new ResponseEntity<>(new Movie(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/delete/{movieId}")
+    public ResponseEntity<?> deleteMovie(@PathVariable Long movieId) {
+        try {
+            movieService.deleteMovieById(movieId);
+            return ResponseEntity.ok().body("Movie deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting movie: " + e.getMessage());
+        }
+    }
 }
