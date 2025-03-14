@@ -2,11 +2,16 @@ package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "ticketID")
 
 public class Ticket {
 
@@ -23,6 +28,7 @@ public class Ticket {
     @JoinColumn(name = "seat_id", referencedColumnName = "seatId")
     @JsonBackReference
     private Seat seat;
+
 
     @ManyToOne
     @JoinColumn(name = "movieplan_id", nullable = false)

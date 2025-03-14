@@ -4,7 +4,6 @@ import com.example.backend.model.Movie;
 import com.example.backend.model.MoviePlan;
 
 import com.example.backend.model.Theater;
-import com.example.backend.repositories.FreeSeatsRepository;
 import com.example.backend.service.MoviePlanService;
 
 import com.example.backend.service.MovieService;
@@ -50,19 +49,17 @@ public class MoviePlanRestController {
             if (m.getMovie().getMovieId().equals(id)) {
                 moviePlanForMovie.add(m);
             }
+        System.out.println(moviePlanForMovie);
         return moviePlanForMovie;
     }
 
     @GetMapping("/movieplans")
-    public List<MoviePlan> moviePlans() {
-        return moviePlanService.findAllMoviePlans();
+    public List<MoviePlan> moviePlansByDate(@RequestParam("date") String movieplandate) {
+        LocalDate date = LocalDate.parse(movieplandate);
+        List<MoviePlan> plans = moviePlanService.movieplansByDate(date);
+        return moviePlanService.movieplansByDate(date);
     }
 
-//    @GetMapping("/byDate/{movieplandate}")
-//    public List<MoviePlan> moviePlansByDate(@PathVariable LocalDate movieplandate) {
-//        List<MoviePlan> movieplansByDate = moviePlanService.movieplansByDate(movieplandate);
-//        return movieplansByDate;
-//    }
 
     @RequestMapping(
             value = "/movieplans",
@@ -95,7 +92,6 @@ public class MoviePlanRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
-
 
 
     //DELETE

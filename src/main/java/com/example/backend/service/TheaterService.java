@@ -1,6 +1,5 @@
 package com.example.backend.service;
 
-import com.example.backend.model.Movie;
 import com.example.backend.model.Theater;
 import com.example.backend.repositories.ITheaterRepository;
 import org.springframework.stereotype.Service;
@@ -28,5 +27,4 @@ public class TheaterService {
     public Optional<Theater> findTheaterByIdNotList(Long theaterId) {
         return iTheaterRepository.findById(theaterId);
     }
-
 }

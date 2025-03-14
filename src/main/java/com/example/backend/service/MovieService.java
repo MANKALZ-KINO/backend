@@ -31,4 +31,7 @@ public class MovieService {
         return iMovieRepository.findById(movieId);
     }
 
+    public void deleteMovieById(Long movieId) {
+        iMovieRepository.deleteById(movieId);
+    }
 }

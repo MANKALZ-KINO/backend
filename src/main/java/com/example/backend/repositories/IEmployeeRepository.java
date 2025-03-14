@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
+public interface IEmployeeRepository extends JpaRepository<Employee, Long> { //klasse og primarykey
 
     Employee findByName(String name);
-   List<Employee> findByNameIgnoreCase(String name);
+
+    List<Employee> findByNameIgnoreCase(String name);
 }

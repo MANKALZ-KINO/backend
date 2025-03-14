@@ -65,6 +65,7 @@ public class TicketInitData implements CommandLineRunner {
 
             iTicketRepository.save(ticket1);
             iTicketRepository.save(ticket2);
+
         }
     }
 }
