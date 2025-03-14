@@ -97,7 +97,6 @@ public class MoviePlanRestController {
     }
 
 
-
     //DELETE
     @DeleteMapping("/movieplan/{id}")
     public ResponseEntity<String> deleteMoviePlan(@PathVariable Long id) {
