@@ -36,22 +36,29 @@ public class TicketService {
         this.seatRepository = seatRepository;
     }
 
+
     public int displayAgeWithinLimit(Ticket ticket) {
         int ageLimit = ticket.getMoviePlan().getMovie().getAgeLimit();
         return ageLimit;
     }
 
+
+
     public List<Ticket> findAllTickets() {
         return ticketRepository.findAll();
     }
+
 
     public Ticket createTicket(Ticket ticket) {
         return ticketRepository.save(ticket);
     }
 
+
+
     public Optional<Ticket> findTicketById(Long id) {
         return ticketRepository.findById(id);
     }
+
 
     // Fixed syntax error in existsById method
     public boolean existsById(Long id) {
@@ -112,14 +119,19 @@ public class TicketService {
         ticket.setMoviePlan(moviePlan);
 
         return ticketRepository.save(ticket);
+
+    public Ticket saveTicket(Ticket updatedTicket) {
+      return ticketRepository.save(updatedTicket);
     }
 
     public Ticket saveTicket(Ticket updatedTicket) {
         return ticketRepository.save(updatedTicket);
     }
 
+
     public void deleteById(Long id) {
         ticketRepository.deleteById(id);
     }
+
 }
 

@@ -1,13 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.model.Movie;
-import com.example.backend.model.MoviePlan;
-import com.example.backend.repositories.IMoviePlanRepository;
-import com.example.backend.repositories.IMovieRepository;
-import com.example.backend.repositories.ITicketRepository;
-import com.example.backend.service.MoviePlanService;
 import com.example.backend.service.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,19 +40,29 @@ public class MovieRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public void postMovie(@RequestBody Movie movie) {
         System.out.println("indsætter ny movie!!");
-        System.out.println(movie);
-        movieService.saveMovie(movie); //opda
+        movieService.saveMovie(movie);
     }
 
     //PUT
     @PutMapping("/updatemovie")
     public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie) {
-        Optional<Movie> orgMovie =movieService.findMovieById(movie.getMovieId());
+        Optional<Movie> orgMovie = movieService.findMovieById(movie.getMovieId());
         if (orgMovie.isPresent()) {
             movieService.saveMovie(movie);
             return new ResponseEntity<>(movie, HttpStatus.OK); //body er JSON
         } else {
             return new ResponseEntity<>(new Movie(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/delete/{movieId}")
+    public ResponseEntity<?> deleteMovie(@PathVariable Long movieId) {
+        try {
+            movieService.deleteMovieById(movieId);
+            return ResponseEntity.ok().body("Movie deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting movie: " + e.getMessage());
         }
     }
 }

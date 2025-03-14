@@ -2,7 +2,6 @@ package com.example.backend.service;
 
 import com.example.backend.model.Employee;
 import com.example.backend.repositories.IEmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 

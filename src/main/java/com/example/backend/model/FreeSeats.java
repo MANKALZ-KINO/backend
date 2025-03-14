@@ -6,12 +6,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
-
 import java.time.LocalDate;
 
 @Entity
 @Immutable
-@Subselect("SELECT * FROM freeseats3") // Kun SELECT her!
+@Subselect("SELECT * FROM freeseats3") // Kun SELECT her, derfor henter vi alt fra vores view
 public class FreeSeats {
     @Id
     private Long seatId;

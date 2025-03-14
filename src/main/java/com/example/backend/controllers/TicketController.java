@@ -62,9 +62,6 @@ public class TicketController {
     // UPDATE
     @PutMapping("/update/{ticketId}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable Long ticketId, @RequestBody Ticket updatedTicket) {
-        if (!ticketService.existsById(ticketId)) {
-            return ResponseEntity.notFound().build();
-        }
         updatedTicket.setTicketID(ticketId);
         Ticket savedTicket = ticketService.saveTicket(updatedTicket);
         return ResponseEntity.ok(savedTicket);
@@ -72,6 +69,7 @@ public class TicketController {
 
     //DELETE via id
     @DeleteMapping("/delete/{ticketId}")
+
     public ResponseEntity<String> deleteTicket(@PathVariable Long ticketId) {
         if (!ticketService.existsById(ticketId)) {
             return ResponseEntity.notFound().build();
@@ -112,6 +110,12 @@ public class TicketController {
         Ticket updatedTicket = ticketService.changeTicket(ticketId, seatId, moviePlanId);
         return ResponseEntity.ok(updatedTicket);
     }
+
+    public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
+        ticketService.deleById(id);
+        return ResponseEntity.ok("Ticket deleted successfully");
+    }
+
 }
 
 
