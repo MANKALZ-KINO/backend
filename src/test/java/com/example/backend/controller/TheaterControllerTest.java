@@ -1,5 +1,5 @@
 package com.example.backend.controller;
-
+//sletmig
 import com.example.backend.controllers.TheaterController;
 import com.example.backend.model.Theater;
 import com.example.backend.service.TheaterService;
