@@ -29,7 +29,6 @@ public class MoviePlanService {
         return iMoviePlanRepository.findAll();
     }
 
-
     public Optional<MoviePlan> movieplans(Long id) {
         return iMoviePlanRepository.findById(id);
     }
@@ -42,9 +41,7 @@ public class MoviePlanService {
         return iMoviePlanRepository.findByMoviePlanDate(movieplandate);
     }
 
-
     public void deleteMovieById(Long id) {
         iMoviePlanRepository.deleteById(id);
     }
-
 }

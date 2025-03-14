@@ -1,12 +1,9 @@
 package com.example.backend.controllers;
 
-import com.example.backend.model.MoviePlan;
 import com.example.backend.model.Theater;
-import com.example.backend.repositories.ITheaterRepository;
 import com.example.backend.service.TheaterService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,8 +28,4 @@ public class TheaterController {
     public List<Theater> theaterById(@PathVariable Long id) {
         return theaterService.findTheatherById(id);
     }
-
-
-
-
 }

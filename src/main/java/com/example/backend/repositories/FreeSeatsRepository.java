@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FreeSeatsRepository extends JpaRepository<FreeSeats, Long> {
-    List<FreeSeats> findBySeatId(Long seatId);
-
     List<FreeSeats> findBymoviePlanId(Long movieplanId);
 }

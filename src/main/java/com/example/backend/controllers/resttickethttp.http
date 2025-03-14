@@ -1,8 +1,0 @@
-### GET liste af students
-GET http://localhost:8080/ticket/all
-Accept: application/json
-
-
-### GET liste af students
-POST http://localhost:8080/ticket/createTicket
-Accept: application/json
