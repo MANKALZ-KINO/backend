@@ -1,7 +1,11 @@
 package com.example.backend.model;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "seatId")
 
 @Entity
 public class Seat {
@@ -10,7 +14,6 @@ public class Seat {
     private Long seatId;
     private int seatNumb;
     private int rowNum;
-
 
     @ManyToOne
     @JoinColumn(name = "theater_id", referencedColumnName = "theaterId", nullable = false)

@@ -1,10 +1,8 @@
 package com.example.backend.config;
 
 import com.example.backend.model.Movie;
-import com.example.backend.repositories.IMoviePlanRepository;
 import com.example.backend.repositories.IMovieRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

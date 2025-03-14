@@ -29,11 +29,14 @@ jobs:
         cache: maven
 
     - name: Set environment variables
-      run: echo "JDBCUrl=${{ secrets.JDBCUrl }}" 
-           echo "JDBCUsername=${{ secrets.JDBCUsername }}" 
-           echo "JDBCPassword=${{ secrets.JDBCPassword }}" 
-
+    - name: Set environment variables
+      run: |
+        echo "JDBCUrl=${{ secrets.JDBCUrl }}" >> $GITHUB_ENV
+        echo "JDBCUsername=${{ secrets.JDBCUsername }}" >> $GITHUB_ENV
+        echo "JDBCPassword=${{ secrets.JDBCPassword }}" >> $GITHUB_ENV
     
+    
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 

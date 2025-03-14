@@ -1,11 +1,16 @@
 package com.example.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "moviePlanId")
 
 @Entity
 public class MoviePlan {
@@ -21,6 +26,7 @@ public class MoviePlan {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "movie_id", referencedColumnName = "movieId", nullable = false)
+    //@JsonIgnore
     private Movie movie;
 
 
