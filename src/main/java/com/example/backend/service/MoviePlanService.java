@@ -42,6 +42,7 @@ public class MoviePlanService {
         return iMoviePlanRepository.findByMoviePlanDate(movieplandate);
     }
 
+
     public void deleteMovieById(Long id) {
         iMoviePlanRepository.deleteById(id);
     }

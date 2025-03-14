@@ -24,6 +24,7 @@ public class Ticket {
     @JsonBackReference
     private Seat seat;
 
+
     @ManyToOne
     @JoinColumn(name = "movieplan_id", nullable = false)
     private MoviePlan moviePlan;
