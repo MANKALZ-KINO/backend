@@ -2,7 +2,6 @@ package com.example.backend.config;
 
 import com.example.backend.model.Cinema;
 import com.example.backend.repositories.ICinemaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

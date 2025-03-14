@@ -19,28 +19,12 @@ public class TicketService {
         this.moviePlanRepository = moviePlanRepository;
     }
 
-    //ved ikke om denne skal bruges
-    public int displayAgeWithinLimit(Ticket ticket) {
-        int ageLimit = ticket.getMoviePlan().getMovie().getAgeLimit();
-        return ageLimit;
-    }
-
     public List<Ticket> findAllTickets() {
         return ticketRepository.findAll();
     }
-    public Ticket createTicket(Ticket ticket) {
-        return ticketRepository.save(ticket);
-    }
+
     public Optional<Ticket> findTicketById(Long id) {
          return ticketRepository.findById(Math.toIntExact(id));
-    }
-
-    public boolean existsById(Long id) {
-      if (ticketRepository.existsById(Math.toIntExact(id))) {
-          return true;
-      } else {
-          return false;
-      }
     }
 
     public Ticket saveTicket(Ticket updatedTicket) {
@@ -49,5 +33,4 @@ public class TicketService {
     public void deleById(Long id) {
         ticketRepository.deleteById(Math.toIntExact(id));
     }
-
 }

@@ -4,7 +4,6 @@ import com.example.backend.model.Movie;
 import com.example.backend.model.MoviePlan;
 
 import com.example.backend.model.Theater;
-import com.example.backend.repositories.FreeSeatsRepository;
 import com.example.backend.service.MoviePlanService;
 
 import com.example.backend.service.MovieService;
@@ -53,12 +52,11 @@ public class MoviePlanRestController {
         System.out.println(moviePlanForMovie);
         return moviePlanForMovie;
     }
+
     @GetMapping("/movieplans")
     public List<MoviePlan> moviePlansByDate(@RequestParam("date") String movieplandate) {
         LocalDate date = LocalDate.parse(movieplandate);
         List<MoviePlan> plans = moviePlanService.movieplansByDate(date);
-        System.out.println("Requested Date: " + date);
-        System.out.println("Found Movie Plans: " + plans);
         return moviePlanService.movieplansByDate(date);
     }
 
