@@ -1,11 +1,9 @@
 package com.example.backend.service;
 
-import com.example.backend.dtos.TicketDTO;
 import com.example.backend.model.Ticket;
 import com.example.backend.repositories.IMoviePlanRepository;
 import com.example.backend.repositories.ITicketRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +11,9 @@ import java.util.Optional;
 
 import com.example.backend.model.MoviePlan;
 import com.example.backend.model.Seat;
-import com.example.backend.model.Ticket;
-import com.example.backend.repositories.IMoviePlanRepository;
-import com.example.backend.repositories.ISeatRepository;
-import com.example.backend.repositories.ITicketRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.backend.repositories.ISeatRepository;
+
 
 @Service
 public class TicketService {
@@ -43,7 +35,6 @@ public class TicketService {
     }
 
 
-
     public List<Ticket> findAllTickets() {
         return ticketRepository.findAll();
     }
@@ -54,9 +45,15 @@ public class TicketService {
     }
 
 
-
     public Optional<Ticket> findTicketById(Long id) {
         return ticketRepository.findById(id);
+    }
+    public Ticket saveTicket(Ticket updatedTicket) {
+        return ticketRepository.save(updatedTicket);
+    }
+
+    public void deleteById(Long id) {
+        ticketRepository.deleteById(id);
     }
 
 
@@ -119,19 +116,8 @@ public class TicketService {
         ticket.setMoviePlan(moviePlan);
 
         return ticketRepository.save(ticket);
-
-    public Ticket saveTicket(Ticket updatedTicket) {
-      return ticketRepository.save(updatedTicket);
     }
 
-    public Ticket saveTicket(Ticket updatedTicket) {
-        return ticketRepository.save(updatedTicket);
-    }
-
-
-    public void deleteById(Long id) {
-        ticketRepository.deleteById(id);
-    }
 
 }
 

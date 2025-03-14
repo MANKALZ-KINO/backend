@@ -69,7 +69,6 @@ public class TicketController {
 
     //DELETE via id
     @DeleteMapping("/delete/{ticketId}")
-
     public ResponseEntity<String> deleteTicket(@PathVariable Long ticketId) {
         if (!ticketService.existsById(ticketId)) {
             return ResponseEntity.notFound().build();
@@ -93,7 +92,6 @@ public class TicketController {
     }
 
 
-
     // DELETE endpoint to cancel a ticket
     @DeleteMapping("/tickets/{ticketId}")
     public ResponseEntity<?> cancelTicket(@PathVariable Long ticketId) {
@@ -109,11 +107,6 @@ public class TicketController {
             @RequestParam Long moviePlanId) {
         Ticket updatedTicket = ticketService.changeTicket(ticketId, seatId, moviePlanId);
         return ResponseEntity.ok(updatedTicket);
-    }
-
-    public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
-        ticketService.deleById(id);
-        return ResponseEntity.ok("Ticket deleted successfully");
     }
 
 }
