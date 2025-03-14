@@ -24,15 +24,24 @@ public class MoviePlanService {
     public List<LocalDate> getAllMoviePlanLocalDates() {
         return iMoviePlanRepository.findAllMoviePlanDates();
     }
-    public List<MoviePlan> movieplansByDate(LocalDate movieplandate) {
-        return iMoviePlanRepository.findByMoviePlanDate(movieplandate);
-    }
 
+    public List<MoviePlan> findAllMoviePlans() {
+        return iMoviePlanRepository.findAll();
+    }
 
 
     public Optional<MoviePlan> movieplans(Long id) {
         return iMoviePlanRepository.findById(id);
     }
+
+    public void saveMoviePlan(MoviePlan moviePlan) {
+        iMoviePlanRepository.save(moviePlan);
+    }
+
+    public List<MoviePlan> movieplansByDate(LocalDate movieplandate) {
+        return iMoviePlanRepository.findByMoviePlanDate(movieplandate);
+    }
+
 
     public void deleteMovieById(Long id) {
         iMoviePlanRepository.deleteById(id);
