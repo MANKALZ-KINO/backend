@@ -1,6 +1,5 @@
 DROP VIEW IF EXISTS freeseats3;
 
-
 CREATE VIEW freeseats3 AS
 SELECT a.*, b.seat_id IS NOT NULL AS seat_taken
 FROM (
@@ -17,9 +16,10 @@ FROM (
         t.seat_id, s.row_num, s.seat_numb,
         s.theater_id, m.movie_id, m.show_number,
         m.movie_plan_date, m.movie_plan_id
-    FROM cinema.ticket t
-             JOIN cinema.seat s ON s.seat_id = t.seat_id
-             JOIN cinema.movie_plan m ON m.theater_id = s.theater_id
+    FROM cinema.ticket t, cinema.seat s, cinema.movie_plan m where
+              t.movieplan_id=m.movie_plan_id and
+              m.theater_id=s.theater_id and
+              t.seat_id=s.seat_id
 ) b
                    ON a.seat_id = b.seat_id
                        AND a.movie_plan_id = b.movie_plan_id
