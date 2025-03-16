@@ -67,7 +67,7 @@ public class MoviePlanInitData implements CommandLineRunner {
 
             MoviePlan moviePlan3 = new MoviePlan();
             moviePlan3.setMoviePlanDate(LocalDate.now().plusDays(2));
-            moviePlan3.setShowNumber(ShowNumber.NOON);
+            moviePlan3.setShowNumber(ShowNumber.MORNING);
             moviePlan3.setMovie(movie);
             moviePlan3.setTheater(theater);
 
@@ -79,7 +79,7 @@ public class MoviePlanInitData implements CommandLineRunner {
 
             MoviePlan moviePlan5 = new MoviePlan();
             moviePlan5.setMoviePlanDate(LocalDate.now().plusDays(2));
-            moviePlan5.setShowNumber(ShowNumber.NOON);
+            moviePlan5.setShowNumber(ShowNumber.AFTERNOON);
             moviePlan5.setMovie(movie3);
             moviePlan5.setTheater(theater);
 

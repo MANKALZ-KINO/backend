@@ -13,6 +13,8 @@ import java.util.List;
         property = "moviePlanId")
 
 @Entity
+@Table(name = "movie_plan",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"theater_id", "movie_plan_date", "show_number"}))
 public class MoviePlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

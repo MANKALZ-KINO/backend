@@ -1,4 +1,3 @@
-/*
 DROP VIEW IF EXISTS freeseats3;
 
 CREATE VIEW freeseats3 AS
@@ -29,4 +28,3 @@ ORDER BY movie_plan_date, show_number, row_num, seat_numb;
 
 SELECT DISTINCT movie_plan_id FROM freeseats3;
 
-*/

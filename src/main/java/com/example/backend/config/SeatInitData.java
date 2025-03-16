@@ -10,12 +10,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class SeatInitData implements CommandLineRunner {
-
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -33,14 +31,12 @@ public class SeatInitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         List<Theater> theaters = iTheaterRepository.findAll();
 
-        List<Seat> seats = new ArrayList<>();
-
         for (Theater theater : theaters) {
             Theater managedTheater = entityManager.merge(theater);
             int numRows;
             int numSeatsPerRow;
 
-            if (managedTheater.getCapacity() <= 10) {
+            if (managedTheater.getCapacity() <= 3) {
                 numRows = 2;
                 numSeatsPerRow = 5;
             } else {
@@ -48,20 +44,21 @@ public class SeatInitData implements CommandLineRunner {
                 numSeatsPerRow = 6;
             }
 
+            System.out.println("Processing Theater ID: " + managedTheater.getTheaterId());
+
             for (int row = 1; row <= numRows; row++) {
                 for (int seatNum = 1; seatNum <= numSeatsPerRow; seatNum++) {
-                    Seat seat = new Seat();
-                    seat.setRowNum(row);
-                    seat.setSeatNumb(seatNum);
-                    seat.setTheater(managedTheater);
-                    seats.add(seat);
+                    if (!iSeatRepository.existsByRowNumAndSeatNumbAndTheater(row, seatNum, managedTheater)) {
+                        Seat seat = new Seat();
+                        seat.setRowNum(row);
+                        seat.setSeatNumb(seatNum);
+                        seat.setTheater(managedTheater);
+                        iSeatRepository.save(seat); // Gemmer sædet direkte
+                        System.out.println("Added Seat: Row " + row + " Seat " + seatNum + " for Theater ID " + managedTheater.getTheaterId());
+                    }
                 }
             }
-            System.out.println((numRows * numSeatsPerRow) + " seats added for Theater ID: " + managedTheater.getTheaterId());
+            System.out.println("Seats initialized for Theater ID: " + managedTheater.getTheaterId());
         }
-
-        iSeatRepository.saveAll(seats);
-        System.out.println("All seats initialized successfully!");
     }
 }
-
